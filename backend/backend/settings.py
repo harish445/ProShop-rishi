@@ -25,7 +25,7 @@ SECRET_KEY = 'p10pnm72^03yyt(p!r93psa#_2kt0@m^1el_hs!in7622kl5v*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-rishi.herokuapp.com']
 
 
 # Application definition
@@ -83,6 +83,8 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -179,11 +181,14 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    #BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'static'),
     BASE_DIR / 'frontend/build/static'
 ]
 
-MEDIA_ROOT = 'static/images'
+#MEDIA_ROOT = BASE_DIR / 'static/images'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -192,7 +197,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'AKIAYBIDF3XVKM3EUV4X '
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAYBIDF3XVKM3EUV4X'
+AWS_SECRET_ACCESS_KEY = 'ZmB9BSu52SNcRnyxZ9QjIj9NgSJhu0pBGIt9n6N'
 
 AWS_STORAGE_BUCKET_NAME = 'rishi-proshop-bucket'
+
+
+if os.getcwd() == '/app':
+    DEBUG = False
